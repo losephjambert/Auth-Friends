@@ -6,12 +6,13 @@ const initialFormValues = {
   password: 'i<3Lambd4',
 };
 
-const Login = () => {
+const Login = props => {
   const [formValues, setFormValues] = useState(initialFormValues);
 
   const handleSubmit = e => {
     e.preventDefault();
-    login(formValues);
+    login(formValues, () => props.history.push('/friends'));
+    setFormValues(initialFormValues);
   };
 
   const handleChange = e => {
@@ -26,11 +27,11 @@ const Login = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor='username'>Username</label>
-        <input type='text' name='username' onChange={handleChange} defaultValue={username} />
+        <input type='text' name='username' onChange={handleChange} value={username} />
       </div>
       <div>
         <label htmlFor='password'>Password</label>
-        <input type='password' name='username' onChange={handleChange} defaultValue={password} />
+        <input type='password' name='username' onChange={handleChange} value={password} />
       </div>
       <input type='submit' value='Login' />
     </form>
