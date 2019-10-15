@@ -6,8 +6,8 @@ import Login from './components/auth/Login';
 
 const Routes = () => (
   <Switch>
-    <Route path='/' component={LandingPage} />
     <Route path='/login' component={Login} />
+    <Route component={LandingPage} />
   </Switch>
 );
 
