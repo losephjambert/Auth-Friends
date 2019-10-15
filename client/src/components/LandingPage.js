@@ -6,8 +6,7 @@ const LandingPage = () => {
     <section>
       <h2>
         Welcome to Auth Friends, brought to you by Friends of Friends, your favorite neighborhood friend factory.{' '}
-        <Link to='/login'>Login</Link>
-        to make some friends 😉
+        <Link to='/login'>Login</Link> to make some friends 😉
       </h2>
     </section>
   );
