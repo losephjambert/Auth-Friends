@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import { login } from '../../api';
 
 const initialFormValues = {
-  username: '',
-  password: '',
+  username: 'Lambda School',
+  password: 'i<3Lambd4',
 };
 
 const Login = () => {
-  const formValues = useState(initialFormValues);
+  const [formValues, setFormValues] = useState(initialFormValues);
 
   const handleSubmit = e => {
     e.preventDefault();
+    login(formValues);
   };
 
   const handleChange = e => {
-    console.log(e.target.name, e.target.value);
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const { username, password } = formValues;
@@ -24,10 +29,10 @@ const Login = () => {
         <input type='text' name='username' onChange={handleChange} defaultValue={username} />
       </div>
       <div>
-        <label htmlFor='password'>Username</label>
+        <label htmlFor='password'>Password</label>
         <input type='password' name='username' onChange={handleChange} defaultValue={password} />
       </div>
-      <input type='button' value='Login' />
+      <input type='submit' value='Login' />
     </form>
   );
 };
