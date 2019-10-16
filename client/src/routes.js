@@ -4,12 +4,12 @@ import PrivateRoute from './components/auth/PrivateRoute';
 
 import LandingPage from './components/LandingPage';
 import Login from './components/auth/Login';
-import Friends from './components/private/Friends';
+import FriendsContainer from './components/private/FriendsContainer';
 
 const Routes = () => (
   <Switch>
     <Route path='/login' component={Login} />
-    <PrivateRoute path='/friends' component={Friends} />
+    <PrivateRoute path='/friends' component={FriendsContainer} />
     <Route component={LandingPage} />
   </Switch>
 );
