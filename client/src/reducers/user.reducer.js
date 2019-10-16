@@ -1,13 +1,9 @@
-import {
-  USER_LOGIN_START,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE
-} from "../actions";
+import { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE } from '../actions';
 
 const initialState = {
   isLoggingIn: false,
-  isLoggedIn: false,
-  error: null
+  isLoggedIn: localStorage.getItem('token') || false,
+  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -15,19 +11,19 @@ export default (state = initialState, action) => {
     case USER_LOGIN_START:
       return {
         ...initialState,
-        isLoggingIn: true
+        isLoggingIn: true,
       };
     case USER_LOGIN_SUCCESS:
       return {
         error: null,
         isLoggedIn: true,
-        isLoggingIn: false
+        isLoggingIn: false,
       };
     case USER_LOGIN_FAILURE:
       return {
         error: action.payload,
         isLoggingIn: false,
-        isLoggedIn: false
+        isLoggedIn: false,
       };
     default:
       return state;
