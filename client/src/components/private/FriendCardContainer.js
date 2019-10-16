@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, Route, useParams, Redirect } from 'react-router-dom';
 
 import {
   FRIENDS_EDITING_START,
@@ -8,25 +9,65 @@ import {
   FRIENDS_UPDATE_FAILURE,
 } from '../../actions';
 
+const EditFriend = props => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log('edit friend useEffect');
+    dispatch({ type: FRIENDS_EDITING_START, payload: id });
+  }, [dispatch, id]);
+
+  if (Number(id) !== props.id) return null;
+
+  return (
+    <form>
+      <div>
+        <input type='text' placeholder='Name' name='name' defaultValue={props.name} />
+      </div>
+      <div>
+        <input type='number' placeholder='Age' name='age' defaultValue={props.age} />
+      </div>
+      <div>
+        <input type='email' placeholder='Email' name='email' defaultValue={props.email} />
+      </div>
+      <div>
+        <input type='submit' />
+      </div>
+    </form>
+  );
+};
+
 const FriendCard = props => {
   const dispatch = useDispatch();
 
-  const handleClick = id => {
-    console.log('dispatch action to flip editing toggle and set editing id');
-    dispatch({ type: FRIENDS_EDITING_START, payload: id });
-  };
+  // const handleClick = id => {
+  //   console.log('dispatch action to flip editing toggle and set editing id');
+  //   dispatch({ type: FRIENDS_EDITING_START, payload: id });
+  // };
 
-  if (props.friend.editing && props.friend.id === props.id) return <form>edit form goes here</form>;
+  // if (props.friend.editing && props.friend.id === props.id)
+  //   return <Route path='/friends/edit/:id' render={() => <EditFriend {...props} />} />;
+  // console.log(`Are we editing? --> ${props.friend.editing && Number(props.friend.id) === props.id ? 'yes' : 'no'}`);
+  const editing = props.friend.editing && Number(props.friend.id) === props.id;
 
-  return (
-    <figure>
+  let Card = (
+    <>
       <h3>{props.name}</h3>
       <ul>
         <li>{props.age}</li>
         <li>{props.email}</li>
       </ul>
+      <Link to={`/friends/edit/${props.id}`}>Edit Link</Link>
+    </>
+  );
+  if (editing) Card = null;
+
+  return (
+    <figure>
+      <div>{Card}</div>
       <div>
-        <button onClick={() => handleClick(props.id)}>Edit</button>
+        <Route path='/friends/edit/:id' render={() => <EditFriend {...props} />} />
       </div>
     </figure>
   );
