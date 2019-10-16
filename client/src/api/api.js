@@ -1,21 +1,34 @@
-import { API_ROOT } from './api.config';
-import { axiosWithAuth } from './axiosWithAuth';
+import { API_ROOT } from "./api.config";
+import { axiosWithAuth } from "./axiosWithAuth";
 
-export const login = async (credentials, redirect) => {
-  const responseObject = {
-    response: null,
-    error: null,
-  };
+export const login = async (credentials, actions) => {
+  const { start, success, error } = actions;
+  start();
   try {
-    const data = await axiosWithAuth(API_ROOT).post('/login', credentials);
-    responseObject.response = data;
-    localStorage.setItem('token', data.data.payload);
-    redirect();
+    const response = await axiosWithAuth(API_ROOT).post("/login", credentials);
+    success();
+    localStorage.setItem("token", response.data.payload);
   } catch (err) {
-    console.log('Error logging in. Please check the error log for more information.');
+    error(err);
+    console.log(
+      "Error logging in. Please check the error log for more information."
+    );
     console.error(err);
-    responseObject.error = err;
-  } finally {
-    return responseObject;
+  }
+};
+
+export const fetchFriends = async actions => {
+  const { start, success, error } = actions;
+  start();
+  try {
+    const friendsResponse = await axiosWithAuth(API_ROOT).get("/friends");
+    console.log(friendsResponse);
+    success(friendsResponse.data);
+  } catch (err) {
+    error(err);
+    console.log(
+      "Error logging in. Please check the error log for more information."
+    );
+    console.error(err);
   }
 };
