@@ -29,15 +29,15 @@ export const fetchFriends = async actions => {
   }
 };
 
-export const createFriend = async (payload, actions) => {
-  // const { start, success, error } = actions;
-  // start();
+export const createFriend = async (formValues, actions) => {
+  const { start, success, error } = actions;
+  start();
   try {
-    const createFriendResponse = await axiosWithAuth(API_ROOT).post('/friends');
+    const createFriendResponse = await axiosWithAuth(API_ROOT).post('/friends', formValues);
     console.log(createFriendResponse);
-    // success(createFriendResponse.data);
+    success(createFriendResponse.data);
   } catch (err) {
-    // error(err);
+    error(err);
     console.log('Error logging in. Please check the error log for more information.');
     console.error(err);
   }

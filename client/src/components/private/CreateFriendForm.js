@@ -2,23 +2,11 @@ import React, { useState } from 'react';
 import useForm from 'react-hook-form';
 import { createFriend } from '../../api';
 
-// import { useSelector, useDispatch } from 'react-redux';
-// import {
-//   USER_CREATE_START,
-//   USER_CREATE_SUCCESS,
-//   USER_CREATE_FAILURE
-// } from "../../actions";
-
-// const initialFormValues = {
-//   name: '',
-//   age: '',
-//   email: '',
-// };
+import { useSelector, useDispatch } from 'react-redux';
+import { FRIENDS_CREATE_START, FRIENDS_CREATE_SUCCESS, FRIENDS_CREATE_FAILURE } from '../../actions';
 
 const CreateFriendForm = props => {
-  // const [formValues, setFormValues] = useState(initialFormValues);
-  // const dispatch = useDispatch();
-  // const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   if (user.isLoggedIn) {
@@ -39,7 +27,11 @@ const CreateFriendForm = props => {
   const { register, handleSubmit, errors, watch } = useForm();
   const onSubmit = formValues => {
     console.log('form values ', formValues);
-    createFriend(formValues);
+    createFriend(formValues, {
+      start: payload => dispatch({ type: FRIENDS_CREATE_START, payload }),
+      success: payload => dispatch({ type: FRIENDS_CREATE_SUCCESS, payload }),
+      error: payload => dispatch({ type: FRIENDS_CREATE_FAILURE, payload }),
+    });
   };
   console.log(errors);
   // console.log(watch());

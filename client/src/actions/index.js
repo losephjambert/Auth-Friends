@@ -1,11 +1,10 @@
-export {
-  USER_LOGIN_START,
-  USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE
-} from "./user.actions";
+export { USER_LOGIN_START, USER_LOGIN_SUCCESS, USER_LOGIN_FAILURE } from './user.actions';
 
 export {
   FRIENDS_FETCH_START,
   FRIENDS_FETCH_SUCCESS,
-  FRIENDS_FETCH_FAILURE
-} from "./friends.actions";
+  FRIENDS_FETCH_FAILURE,
+  FRIENDS_CREATE_START,
+  FRIENDS_CREATE_SUCCESS,
+  FRIENDS_CREATE_FAILURE,
+} from './friends.actions';
