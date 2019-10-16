@@ -5,12 +5,20 @@ import {
   FRIENDS_CREATE_START,
   FRIENDS_CREATE_SUCCESS,
   FRIENDS_CREATE_FAILURE,
+  FRIENDS_EDITING_START,
+  FRIENDS_UPDATE_START,
+  FRIENDS_UPDATE_SUCCESS,
+  FRIENDS_UPDATE_FAILURE,
 } from '../actions';
 
 const initialState = {
   isFetching: false,
   error: null,
   friends: [],
+  friend: {
+    editing: false,
+    id: null,
+  },
   createFriend: {
     isCreating: false,
     error: null,
@@ -22,12 +30,13 @@ export default (state = initialState, action) => {
     case FRIENDS_FETCH_START:
       console.log('fetching friends');
       return {
-        ...initialState,
+        ...state,
         isFetching: true,
       };
     case FRIENDS_FETCH_SUCCESS:
       console.log('fetching friends success!');
       return {
+        ...state,
         error: null,
         isFetching: false,
         friends: action.payload,
@@ -52,7 +61,7 @@ export default (state = initialState, action) => {
       console.log('creating friends success!');
       return {
         ...state,
-        friends: [action.payload],
+        friends: action.payload,
         createFriend: {
           isCreating: false,
           error: null,
@@ -65,6 +74,15 @@ export default (state = initialState, action) => {
         createFriend: {
           isCreating: false,
           error: action.payload,
+        },
+      };
+    case FRIENDS_EDITING_START:
+      console.log(FRIENDS_EDITING_START);
+      return {
+        ...state,
+        friend: {
+          editing: true,
+          id: action.payload,
         },
       };
     default:

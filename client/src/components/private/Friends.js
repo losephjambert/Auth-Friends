@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchFriends } from '../../api';
 import { FRIENDS_FETCH_START, FRIENDS_FETCH_SUCCESS, FRIENDS_FETCH_FAILURE } from '../../actions';
 
+import FriendCardContainer from './FriendCardContainer';
+
 const Friends = () => {
   const friends = useSelector(state => state.friends);
   const dispatch = useDispatch();
@@ -20,15 +22,7 @@ const Friends = () => {
       <h2>This is the super secret friends page, only for ~~authenticated~~ friends</h2>
       <section>
         {friends.friends.map(friend => {
-          return (
-            <figure key={friend.id}>
-              <h3>{friend.name}</h3>
-              <ul>
-                <li>{friend.age}</li>
-                <li>{friend.email}</li>
-              </ul>
-            </figure>
-          );
+          return <FriendCardContainer {...friend} key={friend.id} />;
         })}
       </section>
     </div>
