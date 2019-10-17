@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, Route, useParams, Redirect } from 'react-router-dom';
+import useForm from 'react-hook-form';
 
+import { updateFriend } from '../../api';
 import {
   FRIENDS_EDITING_START,
   FRIENDS_UPDATE_START,
@@ -12,24 +14,49 @@ import {
 const EditFriend = props => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const { register, handleSubmit, errors, watch } = useForm();
 
-  useEffect(() => {
-    console.log('edit friend useEffect');
-    dispatch({ type: FRIENDS_EDITING_START, payload: id });
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   console.log('edit friend useEffect');
+  //   dispatch({ type: FRIENDS_EDITING_START, payload: id });
+  // }, [dispatch, id]);
 
   if (Number(id) !== props.id) return null;
 
+  const onSubmit = formValues => {
+    console.log('form values ', formValues);
+    updateFriend(formValues, props.id, {
+      start: payload => dispatch({ type: FRIENDS_UPDATE_START, payload }),
+      success: payload => dispatch({ type: FRIENDS_UPDATE_SUCCESS, payload }),
+      error: payload => dispatch({ type: FRIENDS_UPDATE_FAILURE, payload }),
+    });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <input type='text' placeholder='Name' name='name' defaultValue={props.name} />
+        <input
+          type='text'
+          placeholder='Name'
+          name='name'
+          ref={register({ required: true })}
+          defaultValue={props.name}
+        />
+        <p>{errors.name && 'A name is required'}</p>
       </div>
       <div>
-        <input type='number' placeholder='Age' name='age' defaultValue={props.age} />
+        <input type='number' placeholder='Age' name='age' ref={register({ required: true })} defaultValue={props.age} />
+        <p>{errors.age && 'An age is required'}</p>
       </div>
       <div>
-        <input type='email' placeholder='Email' name='email' defaultValue={props.email} />
+        <input
+          type='email'
+          placeholder='Email'
+          name='email'
+          ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+          defaultValue={props.email}
+        />
+        <p>{errors.name && 'A valid email is required'}</p>
       </div>
       <div>
         <input type='submit' />
@@ -39,8 +66,6 @@ const EditFriend = props => {
 };
 
 const FriendCard = props => {
-  const dispatch = useDispatch();
-
   // const handleClick = id => {
   //   console.log('dispatch action to flip editing toggle and set editing id');
   //   dispatch({ type: FRIENDS_EDITING_START, payload: id });
@@ -76,7 +101,7 @@ const FriendCard = props => {
 const FriendCardContainer = props => {
   // This component will display the Friend Card, rendered inside the FriendsContainer
   // const friend = useSelector(state => state.friends.friends.find(f => f.id === props.id));
-  const friend = useSelector(state => state.friends.friend);
+  const friend = useSelector(state => state.friends.updateFriend);
   // The Friend Card can be in one of two states:
   // 1. Editing
   // 2. Not Editing

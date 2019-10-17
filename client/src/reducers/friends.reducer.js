@@ -15,9 +15,10 @@ const initialState = {
   isFetching: false,
   error: null,
   friends: [],
-  friend: {
+  updateFriend: {
     editing: false,
     id: null,
+    isUpdating: false,
   },
   createFriend: {
     isCreating: false,
@@ -80,9 +81,31 @@ export default (state = initialState, action) => {
       console.log(FRIENDS_EDITING_START);
       return {
         ...state,
-        friend: {
+        updateFriend: {
+          ...state.updateFriend,
           editing: true,
           id: action.payload,
+        },
+      };
+    case FRIENDS_UPDATE_START:
+      console.log(FRIENDS_UPDATE_START);
+      return {
+        ...state,
+        updateFriend: {
+          ...state.updateFriend,
+          isUpdating: true,
+        },
+      };
+    case FRIENDS_UPDATE_SUCCESS:
+      console.log(FRIENDS_UPDATE_SUCCESS);
+      return {
+        ...state,
+        friends: action.payload,
+        updateFriend: {
+          ...state.updateFriend,
+          isUpdating: false,
+          editing: false,
+          id: null,
         },
       };
     default:

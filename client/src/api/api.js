@@ -42,3 +42,17 @@ export const createFriend = async (formValues, actions) => {
     console.error(err);
   }
 };
+
+export const updateFriend = async (formValues, id, actions) => {
+  const { start, success, error } = actions;
+  start();
+  try {
+    const editFriendResponse = await axiosWithAuth(API_ROOT).post(`/friends/${id}`, formValues);
+    console.log(editFriendResponse);
+    success(editFriendResponse.data);
+  } catch (err) {
+    error(err);
+    console.log('Error editing friend. Please check the error log for more information.');
+    console.error(err);
+  }
+};
