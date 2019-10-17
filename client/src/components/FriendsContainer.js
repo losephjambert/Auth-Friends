@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchFriends, createFriend, updateFriend } from '../../api';
+import { fetchFriends, createFriend, updateFriend } from '../api';
 import {
   FRIENDS_FETCH_START,
   FRIENDS_FETCH_SUCCESS,
@@ -12,9 +12,9 @@ import {
   FRIENDS_UPDATE_START,
   FRIENDS_UPDATE_SUCCESS,
   FRIENDS_UPDATE_FAILURE,
-} from '../../actions';
+} from '../actions';
 
-import {} from '../../actions';
+import {} from '../actions';
 
 import FriendCard from './FriendCard';
 import FriendForm from './FriendForm';

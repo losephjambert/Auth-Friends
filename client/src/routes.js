@@ -4,7 +4,7 @@ import PrivateRoute from './components/auth/PrivateRoute';
 
 import LandingPage from './components/LandingPage';
 import Login from './components/auth/Login';
-import FriendsContainer from './components/private/FriendsContainer';
+import FriendsContainer from './components/FriendsContainer';
 
 const Routes = () => (
   <Switch>
