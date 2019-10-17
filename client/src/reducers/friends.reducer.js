@@ -5,7 +5,6 @@ import {
   FRIENDS_CREATE_START,
   FRIENDS_CREATE_SUCCESS,
   FRIENDS_CREATE_FAILURE,
-  FRIENDS_EDITING,
   FRIENDS_UPDATE_START,
   FRIENDS_UPDATE_SUCCESS,
   FRIENDS_UPDATE_FAILURE,
@@ -69,16 +68,6 @@ export default (state = initialState, action) => {
         createFriend: {
           isCreating: false,
           error: action.payload,
-        },
-      };
-    case FRIENDS_EDITING:
-      console.log(FRIENDS_EDITING);
-      return {
-        ...state,
-        updateFriend: {
-          ...state.updateFriend,
-          editing: action.payload.editing,
-          id: action.payload.id,
         },
       };
     case FRIENDS_UPDATE_START:
