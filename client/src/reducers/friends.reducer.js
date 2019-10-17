@@ -16,7 +16,6 @@ const initialState = {
   error: null,
   friends: [],
   updateFriend: {
-    editing: false,
     id: null,
     isUpdating: false,
     error: null,
@@ -73,6 +72,7 @@ export default (state = initialState, action) => {
         },
       };
     case FRIENDS_EDITING:
+      console.log(FRIENDS_EDITING);
       return {
         ...state,
         updateFriend: {

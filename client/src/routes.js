@@ -9,6 +9,7 @@ import FriendsContainer from './components/private/FriendsContainer';
 const Routes = () => (
   <Switch>
     <Route path='/login' component={Login} />
+    <PrivateRoute path='/friends/edit/:id' component={FriendsContainer} />
     <PrivateRoute path='/friends' component={FriendsContainer} />
     <Route component={LandingPage} />
   </Switch>
