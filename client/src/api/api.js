@@ -20,7 +20,6 @@ export const fetchFriends = async actions => {
   start();
   try {
     const friendsResponse = await axiosWithAuth(API_ROOT).get('/friends');
-    console.log(friendsResponse);
     success(friendsResponse.data);
   } catch (err) {
     error(err);
@@ -34,7 +33,6 @@ export const createFriend = async (formValues, actions) => {
   start();
   try {
     const createFriendResponse = await axiosWithAuth(API_ROOT).post('/friends', formValues);
-    console.log(createFriendResponse);
     success(createFriendResponse.data);
   } catch (err) {
     error(err);
@@ -43,13 +41,13 @@ export const createFriend = async (formValues, actions) => {
   }
 };
 
-export const updateFriend = async (formValues, id, actions) => {
+export const updateFriend = async (formValues, id, actions, redirect = null) => {
   const { start, success, error } = actions;
   start();
   try {
-    const editFriendResponse = await axiosWithAuth(API_ROOT).post(`/friends/${id}`, formValues);
-    console.log(editFriendResponse);
-    success(editFriendResponse.data);
+    const updateFriendResponse = await axiosWithAuth(API_ROOT).put(`/friends/${id}`, formValues, { id });
+    success(updateFriendResponse.data);
+    redirect && redirect();
   } catch (err) {
     error(err);
     console.log('Error editing friend. Please check the error log for more information.');
