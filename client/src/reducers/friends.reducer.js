@@ -19,6 +19,7 @@ const initialState = {
     editing: false,
     id: null,
     isUpdating: false,
+    error: null,
   },
   createFriend: {
     isCreating: false,
@@ -29,13 +30,11 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case FRIENDS_FETCH_START:
-      console.log('fetching friends');
       return {
         ...state,
         isFetching: true,
       };
     case FRIENDS_FETCH_SUCCESS:
-      console.log('fetching friends success!');
       return {
         ...state,
         error: null,
@@ -43,14 +42,12 @@ export default (state = initialState, action) => {
         friends: action.payload,
       };
     case FRIENDS_FETCH_FAILURE:
-      console.log('fetching friends failure');
       return {
         ...state,
         error: action.payload,
         isFetching: false,
       };
     case FRIENDS_CREATE_START:
-      console.log('creating friends');
       return {
         ...state,
         createFriend: {
@@ -59,7 +56,6 @@ export default (state = initialState, action) => {
         },
       };
     case FRIENDS_CREATE_SUCCESS:
-      console.log('creating friends success!');
       return {
         ...state,
         friends: action.payload,
@@ -69,7 +65,6 @@ export default (state = initialState, action) => {
         },
       };
     case FRIENDS_CREATE_FAILURE:
-      console.log('creating friends failure');
       return {
         ...state,
         createFriend: {
@@ -78,7 +73,6 @@ export default (state = initialState, action) => {
         },
       };
     case FRIENDS_EDITING_START:
-      console.log(FRIENDS_EDITING_START);
       return {
         ...state,
         updateFriend: {
@@ -88,7 +82,6 @@ export default (state = initialState, action) => {
         },
       };
     case FRIENDS_UPDATE_START:
-      console.log(FRIENDS_UPDATE_START);
       return {
         ...state,
         updateFriend: {
@@ -97,7 +90,6 @@ export default (state = initialState, action) => {
         },
       };
     case FRIENDS_UPDATE_SUCCESS:
-      console.log(FRIENDS_UPDATE_SUCCESS);
       return {
         ...state,
         friends: action.payload,
@@ -108,8 +100,16 @@ export default (state = initialState, action) => {
           id: null,
         },
       };
+    case FRIENDS_UPDATE_FAILURE:
+      return {
+        ...state,
+        updateFriend: {
+          ...state.updateFriend,
+          isUpdating: false,
+          error: action.payload,
+        },
+      };
     default:
-      console.log('FRIENDS reducer default', state);
       return state;
   }
 };
