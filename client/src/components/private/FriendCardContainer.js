@@ -4,34 +4,32 @@ import { Link, Route, useParams, useHistory } from 'react-router-dom';
 import useForm from 'react-hook-form';
 
 import { updateFriend } from '../../api';
-import {
-  FRIENDS_EDITING_START,
-  FRIENDS_UPDATE_START,
-  FRIENDS_UPDATE_SUCCESS,
-  FRIENDS_UPDATE_FAILURE,
-} from '../../actions';
+import { FRIENDS_EDITING, FRIENDS_UPDATE_START, FRIENDS_UPDATE_SUCCESS, FRIENDS_UPDATE_FAILURE } from '../../actions';
 
 const EditFriend = props => {
   const { id } = useParams();
   const { push } = useHistory();
-  const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
 
-  useEffect(() => {
-    !props.editing && dispatch({ type: FRIENDS_EDITING_START, payload: id });
-  }, [dispatch, id, props.editing]);
+  // useEffect(() => {
+  //   !props.editing && dispatch({ type: FRIENDS_EDITING_START, payload: id });
+  // }, [dispatch, id, props.editing]);
 
   const onSubmit = formValues => {
     updateFriend(
       formValues,
       props.id,
       {
-        start: payload => dispatch({ type: FRIENDS_UPDATE_START, payload }),
-        success: payload => dispatch({ type: FRIENDS_UPDATE_SUCCESS, payload }),
-        error: payload => dispatch({ type: FRIENDS_UPDATE_FAILURE, payload }),
+        start: payload => props.dispatch({ type: FRIENDS_UPDATE_START, payload }),
+        success: payload => props.dispatch({ type: FRIENDS_UPDATE_SUCCESS, payload }),
+        error: payload => props.dispatch({ type: FRIENDS_UPDATE_FAILURE, payload }),
       },
       () => push('/friends')
     );
+  };
+
+  const handleClick = () => {
+    props.dispatch({ type: FRIENDS_EDITING, payload: { id: null, editing: false } });
   };
 
   return (
@@ -71,13 +69,18 @@ const EditFriend = props => {
           <input type='submit' />
         </div>
       </form>
-      <Link to={`/friends`}>Cancel Editing</Link>
+      <Link onClick={() => handleClick()} to={`/friends`}>
+        Cancel Editing
+      </Link>
     </>
   );
 };
 
 const FriendCard = props => {
   const editing = props.friend.editing && Number(props.friend.id) === props.id;
+  const handleClick = () => {
+    props.dispatch({ type: FRIENDS_EDITING, payload: { id: props.id, editing: true } });
+  };
   return (
     <figure>
       {!editing && (
@@ -87,7 +90,9 @@ const FriendCard = props => {
             <li>{props.age}</li>
             <li>{props.email}</li>
           </ul>
-          <Link to={`/friends/edit/${props.id}`}>Edit</Link>
+          <Link onClick={() => handleClick()} to={`/friends/edit/${props.id}`}>
+            Edit
+          </Link>
         </>
       )}
       <div>
@@ -104,6 +109,7 @@ const FriendCard = props => {
 
 const FriendCardContainer = props => {
   const friend = useSelector(state => state.friends.updateFriend);
+  const dispatch = useDispatch();
   // const editing = friend.editing && Number(friend.id) === props.id;
   // const handleClick = id => {
   //   dispatch({ type: FRIENDS_EDITING_START, payload: id });
@@ -111,7 +117,7 @@ const FriendCardContainer = props => {
 
   return (
     <>
-      <FriendCard {...props} friend={friend} />
+      <FriendCard {...props} friend={friend} dispatch={dispatch} />
     </>
   );
 };

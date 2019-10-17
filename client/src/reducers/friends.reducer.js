@@ -5,7 +5,7 @@ import {
   FRIENDS_CREATE_START,
   FRIENDS_CREATE_SUCCESS,
   FRIENDS_CREATE_FAILURE,
-  FRIENDS_EDITING_START,
+  FRIENDS_EDITING,
   FRIENDS_UPDATE_START,
   FRIENDS_UPDATE_SUCCESS,
   FRIENDS_UPDATE_FAILURE,
@@ -72,13 +72,13 @@ export default (state = initialState, action) => {
           error: action.payload,
         },
       };
-    case FRIENDS_EDITING_START:
+    case FRIENDS_EDITING:
       return {
         ...state,
         updateFriend: {
           ...state.updateFriend,
-          editing: true,
-          id: action.payload,
+          editing: action.payload.editing,
+          id: action.payload.id,
         },
       };
     case FRIENDS_UPDATE_START:
