@@ -1,40 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from 'react-hook-form';
 import { createFriend } from '../../api';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FRIENDS_CREATE_START, FRIENDS_CREATE_SUCCESS, FRIENDS_CREATE_FAILURE } from '../../actions';
 
-const CreateFriendForm = props => {
+const CreateFriendForm = () => {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (user.isLoggedIn) {
-  //     props.history.push('/friends');
-  //   }
-  // }, [user.isLoggedIn, props.history]);
-
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   // createFriend()
-  //   // login(formValues, {
-  //   //   start: payload => dispatch({ type: USER_LOGIN_START, payload }),
-  //   //   success: payload => dispatch({ type: USER_LOGIN_SUCCESS, payload }),
-  //   //   error: payload => dispatch({ type: USER_LOGIN_FAILURE, payload }),
-  //   // });
-  // };
-
-  const { register, handleSubmit, errors, watch } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const onSubmit = formValues => {
-    console.log('form values ', formValues);
     createFriend(formValues, {
       start: payload => dispatch({ type: FRIENDS_CREATE_START, payload }),
       success: payload => dispatch({ type: FRIENDS_CREATE_SUCCESS, payload }),
       error: payload => dispatch({ type: FRIENDS_CREATE_FAILURE, payload }),
     });
   };
-  console.log(errors);
-  // console.log(watch());
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
