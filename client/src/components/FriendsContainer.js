@@ -79,8 +79,8 @@ const FriendsContainer = props => {
 
   return (
     <>
-      {Friends}
       <FriendForm submitHandler={createFriendHandler} />
+      {Friends}
     </>
   );
 };
