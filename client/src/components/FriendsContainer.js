@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { fetchFriends, createFriend, updateFriend } from '../api';
 import {
@@ -56,9 +57,19 @@ const FriendsContainer = props => {
   const Friends = friends.friends.map(friend => {
     let Friend;
     if (Number(match.params.id) === friend.id) {
-      Friend = <FriendForm submitHandler={updateFriendHandler} key={friend.id} defaultFormValues={friend} />;
+      Friend = (
+        <div key={friend.id}>
+          <FriendForm submitHandler={updateFriendHandler} defaultFormValues={friend} />
+          <Link to='/friends'>Cancel Editing</Link>
+        </div>
+      );
     } else {
-      Friend = <FriendCard {...friend} key={friend.id} />;
+      Friend = (
+        <div key={friend.id}>
+          <FriendCard {...friend} />
+          <Link to={`/friends/edit/${friend.id}`}>Edit</Link>
+        </div>
+      );
     }
     return Friend;
   });
