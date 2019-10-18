@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
         isLoggedIn: false
       };
     case USER_LOGOUT:
+      localStorage.removeItem("token");
       return {
         ...state,
         isLoggedIn: false
