@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   USER_LOGIN_START,
   USER_LOGIN_SUCCESS,
-  USER_LOGIN_FAILURE
+  USER_LOGIN_ERROR
 } from "../../actions";
 
 const initialFormValues = {
@@ -29,7 +29,7 @@ const Login = props => {
     login(formValues, {
       start: payload => dispatch({ type: USER_LOGIN_START, payload }),
       success: payload => dispatch({ type: USER_LOGIN_SUCCESS, payload }),
-      error: payload => dispatch({ type: USER_LOGIN_FAILURE, payload })
+      error: payload => dispatch({ type: USER_LOGIN_ERROR, payload })
     });
   };
 
