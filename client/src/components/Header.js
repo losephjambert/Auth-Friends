@@ -1,6 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
+
+const StyledHeader = styled.div`
+  h1 {
+  }
+`;
+
 const Header = () => {
   const user = useSelector(state => state.user);
 
@@ -12,11 +19,13 @@ const Header = () => {
 
   return (
     <header>
-      <h1>Auth Friends</h1>
-      <nav>
-        {LogLink}
-        <Link to="/friends">Friends</Link>
-      </nav>
+      <StyledHeader>
+        <h1 className="title">Auth Friends</h1>
+        <nav>
+          {LogLink}
+          <Link to="/friends">Friends</Link>
+        </nav>
+      </StyledHeader>
     </header>
   );
 };
