@@ -7,6 +7,7 @@ import store from "./reducers";
 import Routes from "./routes";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { StyledContainer, StyledFullPanel } from "./styles";
 
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
@@ -14,11 +15,15 @@ import * as serviceWorker from "./serviceWorker";
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <Header />
-      <main>
-        <Routes />
-      </main>
-      <Footer />
+      <StyledContainer>
+        <Header />
+        <main>
+          <Routes />
+        </main>
+        <StyledFullPanel>
+          <Footer />
+        </StyledFullPanel>
+      </StyledContainer>
     </Router>
   </Provider>,
   document.getElementById("root")
