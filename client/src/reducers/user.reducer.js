@@ -1,7 +1,8 @@
 import {
   USER_LOGIN_START,
   USER_LOGIN_SUCCESS,
-  USER_LOGIN_ERROR
+  USER_LOGIN_ERROR,
+  USER_LOGOUT
 } from "../actions";
 
 const initialState = {
@@ -14,7 +15,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case USER_LOGIN_START:
       return {
-        ...initialState,
+        ...state,
         isLoggingIn: true
       };
     case USER_LOGIN_SUCCESS:
@@ -27,6 +28,11 @@ export default (state = initialState, action) => {
       return {
         error: action.payload,
         isLoggingIn: false,
+        isLoggedIn: false
+      };
+    case USER_LOGOUT:
+      return {
+        ...state,
         isLoggedIn: false
       };
     default:
